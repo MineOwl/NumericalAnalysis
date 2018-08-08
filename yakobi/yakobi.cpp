@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+//このプログラムはコメントで説明できません
 
 void print_matrix(const float matrix[],int limit){
     for(int i=0;i<limit;i++){

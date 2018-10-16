@@ -19,6 +19,7 @@
 
 
 
+
 ２　固有値とは
 
 対角化と固有値の求め方
@@ -26,6 +27,7 @@ https://mathtrain.jp/diagonalization
 固有値がわかると何がいいのか
 https://mathtrain.jp/matrixnjo
 Aのn条は？
+
 
 
 
@@ -37,12 +39,20 @@ https://qiita.com/sci_Haru/items/dd638e698fb72659951b
 2. テスト計算: 4x4行列の固有値・固有ベクトルの数値計算
 3. numpyを利用して求まる結果との比較
 
+２　実際の計算
+
+
 
 
 ４　累乗法
 
+１累乗法の原理
+https://qiita.com/sci_Haru/items/e5278b45ab396424ad86
+その１　テキトーにベクトルを選ぶ
+その２　Aを左からかけまくる
+その３　なぜか絶対値最大の固有ベクトルになる
 
-
+２　逆行列をかけるとどうなるか
 
 
 

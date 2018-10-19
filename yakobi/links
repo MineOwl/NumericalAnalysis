@@ -64,3 +64,74 @@ https://qiita.com/sci_Haru/items/e5278b45ab396424ad86
 
 
 ５　以上。じゃあ頑張って
+
+
+
+import numpy as np
+from numpy import sin,cos,sqrt
+from random import randint
+
+def main(*,A,loop,eps):
+    A = np.matrix(A,dtype='float64')
+    n_dimention = np.linalg.matrix_rank(A)
+    for _ in range(loop):
+        A_after = A
+
+        #絶対値最大の成分を取り出す
+        Aplus = np.abs(A)
+        p = int (Aplus.argmax() / n_dimention)
+        q = A.argmax() % n_dimention
+        _ = input()
+
+        
+        #shitaを求めるのではなくcosshitaとsinshitaを求める
+        cos2shita = np.fabs(A[p,p] - A[q,q]) / np.sqrt(4.0 * A[p,q]**2 + (A[p,p] - A[q,q])**2)
+        while (A[p,p] - A[q,q]<eps) or ( cos2shita ==0  ) or (p==q):
+            p = randint(0,n_dimention-1)
+            q = randint(0,n_dimention-1)
+            cos2shita = np.fabs(A[p,p] - A[q,q]) / np.sqrt(4.0 * A[p,q]**2 + (A[p,p] - A[q,q])**2)
+            print("rechoosed",p,":",q)
+        
+
+        cos_shita = np.sqrt( (1 - cos2shita)/2)
+        sin_shita = np.sqrt( 1 - cos_shita**2)
+        print("cos2shita:",cos2shita)
+        print("sin:",sin_shita)
+        print("cos:",cos_shita)
+
+        for j in range(n_dimention):
+            if j==p or j==q:
+                continue
+            A_after[p,j] =     A[p,j] * cos_shita   +   A[q,j] * sin_shita
+            A_after[q,j] =  -1*A[p,j] * sin_shita   +   A[q,j] * cos_shita
+        
+        for i in range(n_dimention):
+            if i==p or i==q:
+                continue
+            A_after[i,p] =     A[i,p] * cos_shita   +   A[i,q] * sin_shita
+            A_after[i,q] =  -1*A[i,p] * sin_shita   +   A[i,q] * cos_shita
+        
+        A_after[p,p] = A[p,p] * cos_shita**2  +  A[q,q] * sin_shita**2  +  2 * A[p,q] * sin_shita * cos_shita
+        A_after[q,q] = A[p,p] * sin_shita**2  +  A[q,q] * cos_shita**2  -  2 * A[p,q] * sin_shita * cos_shita
+        A_after[p,q] = 0
+        A_after[q,p] = 0
+        print(A_after)
+        A = A_after
+
+
+
+
+
+if __name__ == "__main__":
+    eps = 1e-8
+    A = np.matrix([[ 5,-3, 6 ,4]
+                  ,[ 0, 2, 6 , 5]
+                  ,[ 0, 0,-1 , 10]
+                  ,[ 0, 0,0   , 10]])
+    print(np.linalg.eig(A))
+    main(A=A,loop=100,eps=eps)
+
+
+
+
+

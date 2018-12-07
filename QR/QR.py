@@ -20,8 +20,9 @@ def QR(A):
     R[0,0] = np.linalg.norm(A[:,0])
 
     for i in range(1,N):
+        
         #Qを求める
-        #   PNを作る
+        #そのためにPNを作る
         Sum = 0
         for j in range(0,i):
             Sum -= dot(  (A[:,i]@Q[:,j])  , Q[:,j])
@@ -29,9 +30,10 @@ def QR(A):
         PNnorm = np.linalg.norm(Pn)
         Q[:,i] = Pn / PNnorm
         #WARN:なぜか富豪が入れ替わる
+        
+        #Rを求める
         for j in range(0,i):
             R[j,i] = A[0:,i]@Q[0:,j]
-        #Rを求める
         R[i,i] = PNnorm
         
     return Q,R
